@@ -1,6 +1,7 @@
 const btn = document.getElementById("submitBtn");
 const search = document.getElementById("searchField");
-const display = document.getElementById("displayDiv");
+const displayAutoComplete = document.getElementById("displaySuggestions");
+const displayResult = document.getElementById("displayResult");
 
 const getRecipe = async (searchRecipe) => {
   let mealArray = [];
@@ -14,32 +15,61 @@ const getRecipe = async (searchRecipe) => {
       return el;
     });
 
-    display.innerHTML = "";
+    displayAutoComplete.innerHTML = "";
     findMatch.forEach((element) => {
-      display.innerHTML += `<button id="${element.idMeal}"type="submit" class="display-5 p-3 m-2 bg-white rounded-pill h4">${element.strMeal}</button>`;
+      displayAutoComplete.innerHTML += `<button id="${element.idMeal}"type="submit" class="display-5 p-3 m-2 bg-white rounded-pill h4">${element.strMeal}</button>`;
     });
   } catch (err) {
     // catches errors both in fetch and response.json
-    display.innerHTML = alertMsg;
+    displayAutoComplete.innerHTML = alertMsg;
     console.log(err);
   }
 
-  searchRecipe.length === 0 ? (display.innerHTML = "") : showMeal(mealArray);
+  searchRecipe.length === 0 ? (displayAutoComplete.innerHTML = "") : showMeal(mealArray);
 };
 
 search.addEventListener("input", () => getRecipe(search.value));
 
-//   <img src="${data.meals[0].strMealThumb}" class="img-fluid" alt="Responsive image" width="200px">
-
 function showMeal(mealList) {
-  let buttonList = document.querySelectorAll("button");
-  buttonList.forEach((btnElement) => {
+  document.querySelectorAll("button").forEach((btnElement) => {
     btnElement.addEventListener("click", (el) => {
       mealList.forEach((meal) => {
-        if (meal.idMeal === el.target.id) {
-          console.log(meal.strMealThumb);
-        }
+        meal.idMeal === el.target.id ? UI(meal) : null;
       });
     });
   });
 }
+
+function UI(mealUI) {
+  let filteredIngredient = filtered_keys(mealUI, /strIngredient/);
+  let filteredMeasure = filtered_keys(mealUI, /strMeasure/);
+
+  console.log(filteredIngredient);
+  console.log(filteredMeasure);
+
+  displayResult.innerHTML = `<img src="${mealUI.strMealThumb}" class="img-fluid mb-3 rounded-pill border border-white" alt="Responsive image" width="200px">
+                             <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
+                             <p class="h3 text-white mb-3"> 
+                              <span class="h1 text-white">Instructions: </span> 
+                              ${mealUI.strInstructions}
+                             </p>
+                  
+                              ${filteredIngredient}
+         
+                            `;
+}
+
+let filtered_keys = (obj, filter) => {
+  let key,
+    keys = [];
+  for (key in obj)
+    if (filter.test(key) && obj[key] !== "" && obj[key] !== " " && obj[key] !== null) {
+      let x = `<li class="text-white">
+                ${obj[key]}
+                </li>`;
+      keys.push(x);
+    }
+  return keys.join("");
+};
+
+// <span class="badge badge-primary badge-pill">14</span>

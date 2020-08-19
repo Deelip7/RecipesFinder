@@ -7,3 +7,12 @@ html {
 html::-webkit-scrollbar {
   display: none;
 }
+
+#displayResult {
+  border: 5px solid rgb(255, 255, 255);
+  padding: 50px;
+}
+
+#displayResult > img {
+  border: 3px solid rgb(255, 255, 255) !important;
+}
