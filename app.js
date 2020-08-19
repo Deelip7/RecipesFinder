@@ -49,14 +49,25 @@ function UI(mealUI) {
 
   displayResult.innerHTML = `<img src="${mealUI.strMealThumb}" class="img-fluid mb-3 rounded-pill border border-white" alt="Responsive image" width="200px">
                              <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
-                             <p class="h3 text-white mb-3"> 
-                              <span class="h1 text-white">Instructions: </span> 
+                             <p class="h4 text-white mb-3"> 
+                              <span class="h3 text-white">Instructions: </span> 
                               ${mealUI.strInstructions}
                              </p>
-                  
-                              ${filteredIngredient}
-         
-                            `;
+                            
+                            <table class="table table-hover mx-auto w-100 text-center ">                            
+                            <thead>
+                            <tr class="text-center"> 
+                               <th scope="col">Ingredient</th>
+                               <th scope="col" >Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr >
+                              <td class="text-center px-0">${filteredIngredient}</td>
+                              <td class="text-center px-0">${filteredMeasure}</td>
+                            </tr>
+                            </tbody> 
+                            </table>`;
 }
 
 let filtered_keys = (obj, filter) => {
@@ -64,9 +75,9 @@ let filtered_keys = (obj, filter) => {
     keys = [];
   for (key in obj)
     if (filter.test(key) && obj[key] !== "" && obj[key] !== " " && obj[key] !== null) {
-      let x = `<li class="text-white">
+      let x = `<div class="text-white h4">
                 ${obj[key]}
-                </li>`;
+                </div>`;
       keys.push(x);
     }
   return keys.join("");
