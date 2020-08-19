@@ -3,13 +3,14 @@ const search = document.getElementById("searchField");
 const display = document.getElementById("displayDiv");
 
 const getRecipe = async (searchRecipe) => {
+  let mealArray = [];
   const alertMsg = `<h1 class="display-5 text-white p-2">Search Not Found</h1>`;
   try {
     let res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchRecipe}`);
     let data = await res.json();
-    let arry = Object.values(data.meals);
+    mealArray = Object.values(data.meals);
 
-    let findMatch = arry.filter((el) => {
+    let findMatch = mealArray.filter((el) => {
       return el;
     });
 
@@ -23,18 +24,22 @@ const getRecipe = async (searchRecipe) => {
     console.log(err);
   }
 
-  searchRecipe.length === 0 ? (display.innerHTML = "") : showMeal();
+  searchRecipe.length === 0 ? (display.innerHTML = "") : showMeal(mealArray);
 };
 
 search.addEventListener("input", () => getRecipe(search.value));
 
 //   <img src="${data.meals[0].strMealThumb}" class="img-fluid" alt="Responsive image" width="200px">
 
-function showMeal() {
+function showMeal(mealList) {
   let buttonList = document.querySelectorAll("button");
   buttonList.forEach((btnElement) => {
     btnElement.addEventListener("click", (el) => {
-      console.log(el.target.id);
+      mealList.forEach((meal) => {
+        if (meal.idMeal === el.target.id) {
+          console.log(meal.strMealThumb);
+        }
+      });
     });
   });
 }
