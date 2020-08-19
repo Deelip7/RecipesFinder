@@ -9,16 +9,15 @@ html::-webkit-scrollbar {
 }
 
 #displayResult {
-  border: 3px solid rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 }
 
 #displayResult > img {
-  border: 5px solid rgb(255, 255, 255) !important;
+  border: 4px solid rgb(255, 255, 255) !important;
 }
 
 #displayResult > table {
@@ -27,4 +26,8 @@ html::-webkit-scrollbar {
 
 #displayResult > p {
   max-width: 1000px;
+}
+
+.hidden {
+  display: none;
 }
