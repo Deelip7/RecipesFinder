@@ -51,7 +51,8 @@ function UI(mealUI) {
                              <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
                              <p class="h4 text-white mb-3"> 
                               <span class="h3 text-white">Instructions: </span> 
-                              ${mealUI.strInstructions}
+                              ${mealUI.strInstructions.replace(/\./g, ".<br>")}
+                       
                              </p>
                             
                             <table class="table table-hover mx-auto w-100 text-center ">                            
