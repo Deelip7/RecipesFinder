@@ -3,6 +3,7 @@ const search = document.getElementById("searchField");
 const display = document.getElementById("displayDiv");
 
 const getRecipe = async (searchRecipe) => {
+  const alertMsg = `<h1 class="display-5 text-white">Search Not Found</h1>`;
   try {
     let res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchRecipe}`);
     let data = await res.json();
@@ -13,9 +14,19 @@ const getRecipe = async (searchRecipe) => {
     </div>`;
   } catch (err) {
     // catches errors both in fetch and response.json
-    display.innerHTML = `<h1 class="display-5 text-white">Search Not Found</h1>`;
+    display.innerHTML = alertMsg;
+  }
+  if (searchRecipe.length === 0) {
+    display.innerHTML = alertMsg;
   }
 };
 
-//   <img src="${data.meals[0].strMealThumb}" class="img-fluid" alt="Responsive image" width="200px">
 search.addEventListener("input", () => getRecipe(search.value));
+
+//   <img src="${data.meals[0].strMealThumb}" class="img-fluid" alt="Responsive image" width="200px">
+
+//   let findMatch = data.filter((e) => {
+//     let userValue = new RegExp(`^${searchRecipe}`, "gi");
+//     return data.meals[0].strMeal.match(userValue);
+//   });
+//   console.log(findMatch);
