@@ -1,0 +1,9 @@
+body,
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  text-align: center !important;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
