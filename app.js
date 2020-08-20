@@ -63,9 +63,8 @@ function UI(mealUI) {
   search.value = "";
   //--- Add table to UI
   displayResult.innerHTML = `
-                            <img src="${mealUI.strMealThumb}" class="img-fluid m-1 rounded-pill" alt="Responsive image" width="200px">
-                            <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn">
-                            Save Meal</button>
+                            <img src="${mealUI.strMealThumb}" class="img-fluid mt-4 rounded-pill" alt="Responsive image" width="200px">
+                            <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn">Save &#10084 Recipe</button>
 
                             <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
                              

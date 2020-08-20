@@ -30,6 +30,7 @@ html::-webkit-scrollbar {
 }
 
 #displayResult > p {
+  line-height: 1.6em;
   max-width: 1000px;
 }
 
