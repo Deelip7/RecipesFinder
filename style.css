@@ -8,6 +8,10 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+#instruction {
+  max-width: 700px !important;
+}
+
 #displayResult {
   border: 1px solid rgb(255, 255, 255);
   display: flex;
@@ -17,7 +21,7 @@ html::-webkit-scrollbar {
 }
 
 #displayResult > img {
-  border: 4px solid rgb(255, 255, 255) !important;
+  border: 4px solid rgb(255, 255, 255);
 }
 
 #displayResult > table {
@@ -34,4 +38,10 @@ html::-webkit-scrollbar {
 
 link {
   display: inline !important;
+}
+
+.source {
+  display: flex;
+  align-self: auto;
+  margin: 20px auto;
 }
