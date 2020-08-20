@@ -14,6 +14,7 @@ html::-webkit-scrollbar {
 
 #displayResult {
   border: 1px solid rgb(255, 255, 255);
+  position: relative;
   display: flex;
   flex-flow: column;
   justify-content: center;

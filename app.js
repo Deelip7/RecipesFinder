@@ -3,6 +3,13 @@ const search = document.getElementById("searchField");
 const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
 
+class Favorite {
+  constructor(mealName, id) {
+    this.meal = mealName;
+    this.id = id;
+  }
+}
+
 const getRecipe = async (searchRecipe) => {
   let mealArray = [];
   const alertMsg = `<img src="Images/alert-circle.svg" width="50px" class="border-0 mb-3"/>
@@ -39,7 +46,6 @@ function showMeal(mealList) {
   document.querySelectorAll("button").forEach((btnElement) => {
     btnElement.addEventListener("click", (el) => {
       mealList.forEach((meal) => {
-        console.log("showMeal -> meal", meal);
         meal.idMeal === el.target.id ? UI(meal) : null;
         displayAutoComplete.classList.add("hidden");
       });
@@ -48,6 +54,8 @@ function showMeal(mealList) {
 }
 
 function UI(mealUI) {
+  const savedMeal = new Favorite(mealUI.idMeal, mealUI.strMeal);
+
   let filteredIngredient = filtered_keys(mealUI, /strIngredient/);
   let filteredMeasure = filtered_keys(mealUI, /strMeasure/);
 
@@ -55,7 +63,10 @@ function UI(mealUI) {
   search.value = "";
   //--- Add table to UI
   displayResult.innerHTML = `
-                            <img src="${mealUI.strMealThumb}" class="img-fluid m-4 rounded-pill" alt="Responsive image" width="200px">
+                            <img src="${mealUI.strMealThumb}" class="img-fluid m-1 rounded-pill" alt="Responsive image" width="200px">
+                            <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn">
+                            Save Meal</button>
+
                             <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
                              
                             <h4 class="text-white mb-5 mx-auto"> 
@@ -86,11 +97,15 @@ function UI(mealUI) {
                             </table>
                             <div class="source">
                               <img src="Images/link-2.svg"  width="25px" class="border-0 mb-2 mr-2"/>
-                                <a href="${mealUI.strSource}" target="_blank" class="text-white h4 mr-4"> Source</a> 
+                                <a href="${mealUI.strSource}" target="_blank" class="text-white h4 mr-4">Source</a> 
                               <img src="Images/youtube.svg"  width="25px" class="border-0 mb-2 mr-2"/>
-                                <a href="${mealUI.strYoutube}" target="_blank" class="text-white h4 mr-2"> Youtube</a> 
+                                <a href="${mealUI.strYoutube}" target="_blank" class="text-white h4 mr-2">YouTube</a> 
                             </div>
                             `;
+
+  document.getElementById("saveBtn").addEventListener("click", (e) => {
+    StoreData.addData(savedMeal);
+  });
 }
 
 let filtered_keys = (obj, filter) => {
@@ -105,3 +120,37 @@ let filtered_keys = (obj, filter) => {
     }
   return keys.join("");
 };
+
+class StoreData {
+  static getData() {
+    let plans;
+    if (localStorage.getItem("plans") === null) {
+      // create local storage array called "plans" and set it = []
+      plans = [];
+    } else {
+      plans = JSON.parse(localStorage.getItem("plans")); // if "plans" array exists return it to addData()
+    }
+
+    return plans;
+  }
+
+  static addData(plan) {
+    // plan parameter is coming from user input
+    const plans = StoreData.getData(); //array from local storage
+    plans.push(plan);
+    localStorage.setItem("plans", JSON.stringify(plans)); //push new data from user to local storage
+  }
+
+  static removeData(el) {
+    // el parameter is coming remove button Onclick
+    const plans = StoreData.getData(); //array from local storage
+    plans.forEach((plan, index) => {
+      // loops iterate over each item in  local storage array
+      if (plan.id == el) {
+        // if local storage array = to button e.target remove it from array
+        plans.splice(index, 1);
+      }
+    });
+    localStorage.setItem("plans", JSON.stringify(plans)); //push new data from user to local storage
+  }
+}
