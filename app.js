@@ -25,7 +25,7 @@ const getRecipe = async (searchRecipe) => {
 
     displayAutoComplete.innerHTML = "";
     findMatch.forEach((element) => {
-      displayAutoComplete.innerHTML += `<button id="${element.idMeal}"type="submit" class="display-5 p-3 m-2 bg-white rounded-pill h5">${element.strMeal}</button>`;
+      displayAutoComplete.innerHTML += `<button id="${element.idMeal}" type="submit" class="btn btn-outline-light p-3 m-2 rounded-pill">${element.strMeal}</button>`;
     });
   } catch (err) {
     // catches errors both in fetch and response.json
@@ -64,14 +64,14 @@ function UI(mealUI) {
   //--- Add table to UI
   displayResult.innerHTML = `
                             <img src="${mealUI.strMealThumb}" class="img-fluid mt-4 rounded-pill" alt="Responsive image" width="200px">
-                            <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn">Save &#10084 Recipe</button>
+                            <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn">Save &#x2764 Recipe</button>
 
                             <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
                              
                             <h4 class="text-white mb-5 mx-auto"> 
-                            <img src="Images/map-pin.svg"  width="25px"/>
+                            <img src="Images/map-pin2.svg"  width="25px"/>
                              ${mealUI.strArea}<span class="h2 text-white"> | </span>
-                            <img src="Images/grid.svg" width="25px">
+                            <img src="Images/grid2.svg" width="25px">
                              ${mealUI.strCategory} 
                             </h4> 
 
@@ -95,10 +95,10 @@ function UI(mealUI) {
                               </tbody> 
                             </table>
                             <div class="source">
-                              <img src="Images/link-2.svg"  width="25px" class="border-0 mb-2 mr-2"/>
-                                <a href="${mealUI.strSource}" target="_blank" class="text-white h4 mr-4">Source</a> 
-                              <img src="Images/youtube.svg"  width="25px" class="border-0 mb-2 mr-2"/>
-                                <a href="${mealUI.strYoutube}" target="_blank" class="text-white h4 mr-2">YouTube</a> 
+                              <img src="Images/link-2.svg"  width="20px" class="border-0 mb-2 mr-2"/>
+                                <a href="${mealUI.strSource}" target="_blank" class="text-white mr-4">Source</a> 
+                              <img src="Images/youtube.svg"  width="20px" class="border-0 mb-2 mr-2"/>
+                                <a href="${mealUI.strYoutube}" target="_blank" class="text-white mr-2">YouTube</a> 
                             </div>
                             `;
 
