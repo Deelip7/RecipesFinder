@@ -4,8 +4,8 @@ const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
 
 class Favorite {
-  constructor(mealName, id) {
-    this.meal = mealName;
+  constructor(id, meal) {
+    this.meal = meal;
     this.id = id;
   }
 }
@@ -134,10 +134,17 @@ class StoreData {
   }
 
   static addData(plan) {
-    // plan parameter is coming from user input
+    let hasId = false;
     const plans = StoreData.getData(); //array from local storage
-    plans.push(plan);
-    localStorage.setItem("plans", JSON.stringify(plans)); //push new data from user to local storage
+
+    plans.forEach((e) => {
+      hasId = e.id.includes(plan.id);
+    });
+
+    if (hasId === false) {
+      plans.push(plan);
+      localStorage.setItem("plans", JSON.stringify(plans));
+    }
   }
 
   static removeData(el) {
