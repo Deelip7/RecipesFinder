@@ -3,12 +3,25 @@ const searchField = document.getElementById("searchField");
 const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
 
+/*
+/------------------------------------------------------------
+/   Favorite Classes
+/------------------------------------------------------------
+/   Used for storing data to LocalStorage
+*/
 class Favorite {
   constructor(id, meal) {
     this.meal = meal;
     this.id = id;
   }
 }
+
+/*
+/------------------------------------------------------------
+/  StoreData Classes
+/------------------------------------------------------------
+/   Set/Get/Remove date from LocalStorage.
+*/
 
 class StoreData {
   static getData() {
@@ -53,7 +66,16 @@ class StoreData {
   }
 }
 
+/*
+/------------------------------------------------------------
+/  UI Classes
+/------------------------------------------------------------
+/ Update UI dynamical as user types. Display Recipe based on button click
+/ Update DOM with API data and store to localStorage if needed
+*/
+
 class UI {
+  // Get Recipe using API data
   static getRecipe = async (searchRecipe) => {
     let mealArray = [];
     try {
@@ -73,6 +95,7 @@ class UI {
     }
   };
 
+  // Alert user if no match is found
   static noRecipeFound() {
     const alertMsg = `<img src="Images/alert-circle.svg" width="50px" class="border-0 mb-3"/>
     <h1 class="display-5 text-white p-3 border border-danger h3">No Result Found</h1>`;
@@ -89,28 +112,33 @@ class UI {
       });
     });
   }
-
+  // API data recived from dipslayRecipe().
+  // Remove null and empty values and return
   static filteredRecipeObjects = (obj, filter) => {
     let key,
       keys = [];
     for (key in obj)
       if (filter.test(key) && obj[key] !== "" && obj[key] !== " " && obj[key] !== null) {
-        let x = `<div class="text-white h4">
+        let IngredientMeasurement = `<div class="text-white h4">
                     ${obj[key]}
                     </div>`;
-        keys.push(x);
+        keys.push(IngredientMeasurement);
       }
     return keys.join("");
   };
 
+  //Get meal recipe data from API and add it to DOM
   static dipslayRecipe(mealUI) {
     const savedMeal = new Favorite(mealUI.idMeal, mealUI.strMeal);
+
+    //Filtered data for Ingredient Measurement list
     let filteredIngredient = UI.filteredRecipeObjects(mealUI, /strIngredient/);
     let filteredMeasure = UI.filteredRecipeObjects(mealUI, /strMeasure/);
 
-    //--- clear input field
+    // clear input field
     searchField.value = "";
-    //--- Add table to UI
+
+    // Add API data to UI
     displayResult.innerHTML = `
                               <img src="${mealUI.strMealThumb}" class="img-fluid mt-4 rounded-pill" alt="Responsive image" width="200px">
                               <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn">Save &#x2764 Recipe</button>
@@ -150,21 +178,25 @@ class UI {
                                   <a href="${mealUI.strYoutube}" target="_blank" class="text-white mr-2">YouTube</a> 
                               </div>
                               `;
+    // After "Save Recipe" button creation
+    // pass data to StoreData class and save it to LocalStorage
     StoreData.addData(savedMeal);
   }
 }
-
+/*
+/------------------------------------------------------------
+/   Events
+/------------------------------------------------------------
+/   Pass searchField value to UI class
+/
+*/
 searchField.addEventListener("input", () => {
   if (searchField.value.length === 0) {
+    //IF searchField is empty = hid it
     displayAutoComplete.classList.add("hidden");
   } else {
+    // User inputs and UI functions
     UI.getRecipe(searchField.value);
     displayAutoComplete.classList.remove("hidden");
   }
 });
-
-// function saveFavoriteRecipe(savedMeal) {
-//   document.getElementById("saveBtn").addEventListener("click", (e) => {
-//     StoreData.addData(savedMeal);
-//   });
-// }
