@@ -4,6 +4,7 @@ const searchField = document.getElementById("searchField");
 const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
 const saveFavoritesDiv = document.getElementById("saveFavoritesDiv");
+const saveRecipes = document.querySelector(".saveRecipes");
 
 /*
 /------------------------------------------------------------
@@ -39,11 +40,7 @@ class StoreData {
   static addData(plan) {
     const saveFavoritesBtn = document.getElementById("saveBtn");
     saveFavoritesBtn.addEventListener("click", (e) => {
-      saveFavoritesBtn.innerHTML = ` <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                                    </svg> 
-                                    `;
-      saveFavoritesDiv.classList.toggle("show");
+      StoreData.saveFavoritesRecipe(saveFavoritesBtn);
       let hasId = false;
       const plans = StoreData.getData(); //array from local storage
 
@@ -58,6 +55,23 @@ class StoreData {
     });
   }
 
+  static saveFavoritesRecipe(saveFavoritesBtn) {
+    let saveRecipe = [];
+    StoreData.getData().forEach((e) => {
+      saveRecipe.push(e.meal);
+      saveRecipes.innerHTML = `<span>${saveRecipe.join("")}</span>`;
+    });
+    saveFavoritesDiv.classList.add("show");
+
+    saveFavoritesBtn.innerHTML = ` <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+    </svg> 
+    `;
+
+    document.getElementById("closeDiv").addEventListener("click", (e) => {
+      saveFavoritesDiv.classList.remove("show");
+    });
+  }
   static removeData(el) {
     // el parameter is coming remove button Onclick
     const plans = StoreData.getData(); //array from local storage

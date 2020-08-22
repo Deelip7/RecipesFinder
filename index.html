@@ -22,8 +22,14 @@
       <div id="displaySuggestions" class="container text-center text-white mt-2"></div>
     </div>
     <div id="displayResult" class="container bg-primary text-center text-white mt-2"></div>
-    <div id="saveFavoritesDiv" class=""></div>
-    <!-- <div id="saveFavoritesDiv" class="bg-primary p-4 text-white h2 rounded"></div> -->
+    <div id="saveFavoritesDiv" class="bg-primary">
+      <span id="closeDiv" class="bg-primary px-3 py-2 m-1 rounded-circle border-top border-white">X</span>
+      <div class="saveRecipes"></div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>
+
+<!-- saveFavoritesDiv.innerHTML = `
+<div class="text-white w-75 p-3 mt-4 border border-gray mx-auto rounded-pill">${saveRecipe.join("")}
+</div>`; -->
