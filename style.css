@@ -50,14 +50,11 @@ link {
 }
 
 #saveFavoritesDiv {
+  position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-  position: fixed;
   margin: 10px auto;
-  bottom: -500px;
-  max-width: 500px;
+  max-width: 450px;
   height: 0px;
   left: 0;
   right: 0;
@@ -68,18 +65,26 @@ link {
   color: rgb(255, 255, 255);
   overflow: auto;
 }
-.saveRecipes > span {
-  padding: 20px;
+.saveSpan {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  padding: 10px 20px;
+  margin: 10px auto;
+  border-radius: 2%;
+  border: 1px solid rgb(255, 255, 255);
+  max-width: 300px;
 }
 
 #closeDiv {
   position: sticky;
   align-self: flex-end;
-  top: 0px;
-  padding: 20px;
+  top: 10px;
   color: rgb(255, 0, 0) !important;
-  border: 1px solid rgb(255, 255, 255);
+  border: 0px !important;
   cursor: pointer;
+  background-color: #ffffff00 !important;
 }
 
 .show {

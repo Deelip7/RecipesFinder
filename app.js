@@ -40,7 +40,11 @@ class StoreData {
   static addData(plan) {
     const saveFavoritesBtn = document.getElementById("saveBtn");
     saveFavoritesBtn.addEventListener("click", (e) => {
-      StoreData.saveFavoritesRecipe(saveFavoritesBtn);
+      saveFavoritesBtn.innerHTML = ` <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+      </svg> 
+      `;
+
       let hasId = false;
       const plans = StoreData.getData(); //array from local storage
 
@@ -51,27 +55,22 @@ class StoreData {
       if (hasId === false) {
         plans.push(plan);
         localStorage.setItem("plans", JSON.stringify(plans));
+        StoreData.saveFavoritesRecipe();
       }
     });
   }
 
-  static saveFavoritesRecipe(saveFavoritesBtn) {
-    let saveRecipe = [];
+  static saveFavoritesRecipe() {
     StoreData.getData().forEach((e) => {
-      saveRecipe.push(e.meal);
-      saveRecipes.innerHTML = `<span>${saveRecipe.join("")}</span>`;
+      saveRecipes.innerHTML += `<div class="saveSpan rounded-pill" id="${e.id}">${e.meal} <div class="ml-3 align-middle">X</div></div>`;
     });
     saveFavoritesDiv.classList.add("show");
-
-    saveFavoritesBtn.innerHTML = ` <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-    </svg> 
-    `;
 
     document.getElementById("closeDiv").addEventListener("click", (e) => {
       saveFavoritesDiv.classList.remove("show");
     });
   }
+
   static removeData(el) {
     // el parameter is coming remove button Onclick
     const plans = StoreData.getData(); //array from local storage
