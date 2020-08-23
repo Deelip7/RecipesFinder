@@ -5,6 +5,7 @@ const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
 const saveFavoritesDiv = document.getElementById("saveFavoritesDiv");
 const saveRecipes = document.querySelector(".saveRecipes");
+const removeRecipe = document.getElementById("removeRecipe");
 
 /*
 /------------------------------------------------------------
@@ -61,10 +62,10 @@ class StoreData {
   }
 
   static saveFavoritesRecipe() {
+    saveRecipes.innerHTML = "";
     StoreData.getData().forEach((e) => {
       saveRecipes.innerHTML += `<div class="saveSpan rounded-pill" id="${e.id}">${e.meal} <div class="ml-3 align-middle" id="removeRecipe">X</div></div>`;
     });
-    saveFavoritesDiv.classList.add("show");
   }
 
   static removeData(el) {
@@ -223,3 +224,7 @@ searchField.addEventListener("input", () => {
 document.querySelector(".showSavedRecipes").addEventListener("click", (e) => {
   saveFavoritesDiv.classList.toggle("show");
 });
+
+document.addEventListener("DOMContectLoaded", StoreData.saveFavoritesRecipe());
+
+removeRecipe.addEventListener("click", (e) => {});

@@ -62,11 +62,12 @@ link {
   border-radius: 2%;
   color: rgb(255, 255, 255);
   overflow: auto;
+  scrollbar-width: thin;
 }
 .show {
   display: flex !important;
   right: 2% !important;
-  bottom: 6% !important;
+  bottom: 8% !important;
 }
 
 .saveSpan {
