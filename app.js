@@ -5,7 +5,8 @@ const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
 const saveFavoritesDiv = document.getElementById("saveFavoritesDiv");
 const saveRecipes = document.querySelector(".saveRecipes");
-const removeRecipe = document.getElementById("removeRecipe");
+
+// const removeRecipes = document.querySelectorAll(".removeRecipes");
 
 /*
 /------------------------------------------------------------
@@ -28,17 +29,17 @@ class Favorite {
 */
 class StoreData {
   static getData() {
-    let plans;
-    if (localStorage.getItem("plans") === null) {
-      // create local storage array called "plans" and set it = []
-      plans = [];
+    let meals;
+    if (localStorage.getItem("meals") === null) {
+      // create local storage array called "meals" and set it = []
+      meals = [];
     } else {
-      plans = JSON.parse(localStorage.getItem("plans")); // if "plans" array exists return it to addData()
+      meals = JSON.parse(localStorage.getItem("meals")); // if "meals" array exists return it to addData()
     }
-    return plans;
+    return meals;
   }
 
-  static addData(plan) {
+  static addData(meal) {
     const saveFavoritesBtn = document.getElementById("saveBtn");
     saveFavoritesBtn.addEventListener("click", (e) => {
       saveFavoritesBtn.innerHTML = ` <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
@@ -47,15 +48,15 @@ class StoreData {
       `;
 
       let hasId = false;
-      const plans = StoreData.getData(); //array from local storage
+      const meals = StoreData.getData(); //array from local storage
 
-      plans.forEach((e) => {
-        hasId = e.id.includes(plan.id);
+      meals.forEach((e) => {
+        hasId = e.id.includes(meal.id);
       });
 
       if (hasId === false) {
-        plans.push(plan);
-        localStorage.setItem("plans", JSON.stringify(plans));
+        meals.push(meal);
+        localStorage.setItem("meals", JSON.stringify(meals));
         StoreData.saveFavoritesRecipe();
       }
     });
@@ -64,21 +65,21 @@ class StoreData {
   static saveFavoritesRecipe() {
     saveRecipes.innerHTML = "";
     StoreData.getData().forEach((e) => {
-      saveRecipes.innerHTML += `<div class="saveSpan rounded-pill" id="${e.id}">${e.meal} <div class="ml-3 align-middle" id="removeRecipe">X</div></div>`;
+      saveRecipes.innerHTML += `<div class="saveSpan rounded-pill">${e.meal}<div id="${e.id}" class="removeRecipes">X</div></div>`;
     });
   }
 
   static removeData(el) {
     // el parameter is coming remove button Onclick
-    const plans = StoreData.getData(); //array from local storage
-    plans.forEach((plan, index) => {
+    const meals = StoreData.getData(); //array from local storage
+    meals.forEach((meal, index) => {
       // loops iterate over each item in  local storage array
-      if (plan.id == el) {
+      if (meal.id == el.id) {
         // if local storage array = to button e.target remove it from array
-        plans.splice(index, 1);
+        meals.splice(index, 1);
       }
     });
-    localStorage.setItem("plans", JSON.stringify(plans)); //push new data from user to local storage
+    localStorage.setItem("meals", JSON.stringify(meals)); //push new data from user to local storage
   }
 }
 /*
@@ -202,6 +203,12 @@ class UI {
     // pass data to StoreData class and save it to LocalStorage
     StoreData.addData(savedMeal);
   }
+  //Remove meal from UI and DOM but not from the local storage.
+  static removemeal(el) {
+    if (el.classList.contains("removeRecipes")) {
+      el.parentElement.remove();
+    }
+  }
 }
 /*
 /------------------------------------------------------------
@@ -227,4 +234,7 @@ document.querySelector(".showSavedRecipes").addEventListener("click", (e) => {
 
 document.addEventListener("DOMContectLoaded", StoreData.saveFavoritesRecipe());
 
-removeRecipe.addEventListener("click", (e) => {});
+saveRecipes.addEventListener("click", (e) => {
+  UI.removemeal(e.target);
+  StoreData.removeData(e.target);
+});

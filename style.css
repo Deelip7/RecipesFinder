@@ -81,12 +81,9 @@ link {
   max-width: 300px;
 }
 
-#closeDiv {
-  color: rgb(255, 0, 0) !important;
+.removeRecipes {
+  color: rgb(228, 128, 128) !important;
   cursor: pointer;
-}
-
-#removeRecipe {
   align-self: center;
   padding-left: 10px;
   height: 100%;
