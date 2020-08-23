@@ -62,13 +62,9 @@ class StoreData {
 
   static saveFavoritesRecipe() {
     StoreData.getData().forEach((e) => {
-      saveRecipes.innerHTML += `<div class="saveSpan rounded-pill" id="${e.id}">${e.meal} <div class="ml-3 align-middle">X</div></div>`;
+      saveRecipes.innerHTML += `<div class="saveSpan rounded-pill" id="${e.id}">${e.meal} <div class="ml-3 align-middle" id="removeRecipe">X</div></div>`;
     });
     saveFavoritesDiv.classList.add("show");
-
-    document.getElementById("closeDiv").addEventListener("click", (e) => {
-      saveFavoritesDiv.classList.remove("show");
-    });
   }
 
   static removeData(el) {
@@ -222,4 +218,8 @@ searchField.addEventListener("input", () => {
     UI.getRecipe(searchField.value);
     displayAutoComplete.classList.remove("hidden");
   }
+});
+
+document.querySelector(".showSavedRecipes").addEventListener("click", (e) => {
+  saveFavoritesDiv.classList.toggle("show");
 });

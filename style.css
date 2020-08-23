@@ -51,25 +51,28 @@ link {
 
 #saveFavoritesDiv {
   position: fixed;
-  display: flex;
+  display: none;
   flex-direction: column;
   margin: 10px auto;
-  max-width: 450px;
-  height: 0px;
-  left: 0;
-  right: 0;
+  height: 500px;
+  min-width: 350px;
   z-index: 2;
-  transition: all 0.5s ease-in-out;
+  transition: height 0.5s ease-in-out;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 2%;
   color: rgb(255, 255, 255);
   overflow: auto;
 }
+.show {
+  display: flex !important;
+  right: 2% !important;
+  bottom: 6% !important;
+}
+
 .saveSpan {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: center;
   padding: 10px 20px;
   margin: 10px auto;
   border-radius: 2%;
@@ -78,16 +81,35 @@ link {
 }
 
 #closeDiv {
-  position: sticky;
-  align-self: flex-end;
-  top: 10px;
   color: rgb(255, 0, 0) !important;
-  border: 0px !important;
   cursor: pointer;
-  background-color: #ffffff00 !important;
 }
 
-.show {
-  height: 500px !important;
-  bottom: 50px !important;
+#removeRecipe {
+  align-self: center;
+  padding-left: 10px;
+  height: 100%;
+  border-left: 1px solid rgb(255, 255, 255);
+}
+
+.showSavedRecipes {
+  display: block;
+  position: fixed;
+  padding: 1px 15px;
+  margin: 30px;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.326), 0 1px 2px rgba(0, 0, 0, 0.24);
+  color: #000000;
+  font-size: 25px;
+  border: 1px solid rgb(255, 255, 255);
+  background-color: #fff;
+  text-align: center;
+  border-radius: 50px;
+  z-index: 20;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  cursor: pointer;
 }
