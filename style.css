@@ -70,13 +70,17 @@ link {
   bottom: 8% !important;
 }
 
+.recipeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .savedRecipe {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 10px 20px;
-  margin: 10px auto;
-  border-radius: 2%;
+  margin: 10px 10px;
   border: 1px solid rgb(255, 255, 255);
   cursor: pointer;
   max-width: 300px;
@@ -88,11 +92,12 @@ link {
 }
 .removeRecipes {
   color: rgb(228, 128, 128) !important;
+
   cursor: pointer;
   align-self: center;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   height: 100%;
-  border-left: 1px solid rgb(255, 255, 255);
+  /* border-left: 1px solid rgb(255, 255, 255); */
 }
 
 .showSavedRecipes {

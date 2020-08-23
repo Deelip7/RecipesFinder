@@ -46,14 +46,18 @@ class StoreData {
       <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
       </svg> 
       `;
-
       let hasId = false;
       const meals = StoreData.getData(); //array from local storage
 
-      meals.forEach((e) => {
-        hasId = e.id.includes(meal.id);
-      });
-
+      if (meals.length !== 0) {
+        meals.forEach((e) => {
+          if (hasId === true) {
+            return;
+          } else {
+            hasId = e.id.includes(meal.id);
+          }
+        });
+      }
       if (hasId === false) {
         meals.push(meal);
         localStorage.setItem("meals", JSON.stringify(meals));
@@ -65,7 +69,11 @@ class StoreData {
   static saveFavoritesRecipe() {
     saveRecipes.innerHTML = "";
     StoreData.getData().forEach((e) => {
-      saveRecipes.innerHTML += `<div class="savedRecipe rounded-pill">${e.meal}<div id="${e.id}" class="removeRecipes">X</div></div>`;
+      saveRecipes.innerHTML += `
+                              <div class="recipeContainer">
+                                <button id="${e.id}" class="savedRecipe rounded-pill">${e.meal}</button>
+                                <div class="removeRecipes">X</div>
+                              </div>`;
     });
   }
 
@@ -91,7 +99,7 @@ class StoreData {
 */
 class UI {
   // Get Recipe using API data
-  static getRecipe = async (searchRecipe) => {
+  static getRecipe = async (searchRecipe, fromWhere) => {
     let mealArray = [];
     try {
       let res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchRecipe}`);
@@ -102,7 +110,12 @@ class UI {
       mealArray.forEach((element) => {
         displayAutoComplete.innerHTML += `<button id="${element.idMeal}" type="submit" class="btn btn-outline-light p-3 m-2 rounded-pill">${element.strMeal}</button>`;
       });
-      UI.showRecipeOptions(mealArray);
+
+      if (fromWhere === "fromSavedRecipe") {
+        UI.dipslayRecipe(mealArray[0]);
+      } else {
+        UI.showRecipeOptions(mealArray);
+      }
     } catch (err) {
       // catches errors both in fetch and response.json
       UI.noRecipeFound();
@@ -122,6 +135,7 @@ class UI {
     document.querySelectorAll("button").forEach((btnElement) => {
       btnElement.addEventListener("click", (el) => {
         mealList.forEach((meal) => {
+          // meal.idMeal === el.target.nextElementSibling.id ? UI.dipslayRecipe(meal) : null;
           meal.idMeal === el.target.id ? UI.dipslayRecipe(meal) : null;
           displayAutoComplete.classList.add("hidden");
         });
@@ -145,6 +159,34 @@ class UI {
 
   //Get meal recipe data from API and add it to DOM
   static dipslayRecipe(mealUI) {
+    //Change save button icon based on localstorage
+    //----------------------- save button icon ---------------------------
+    let isSavedrecipe = false;
+    let saveIcon = null;
+
+    const isSavedIcon = `<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+    </svg> `;
+
+    const notSavedIcon = `<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+    </svg>`;
+
+    const savedRecipeList = StoreData.getData();
+
+    savedRecipeList.forEach((e) => {
+      if (mealUI.idMeal === e.id) {
+        return (isSavedrecipe = true);
+      }
+    });
+
+    if (isSavedrecipe === true) {
+      saveIcon = isSavedIcon;
+    } else {
+      saveIcon = notSavedIcon;
+    }
+    //---------------------------------------------------------------
+
     const savedMeal = new Favorite(mealUI.idMeal, mealUI.strMeal);
 
     //Filtered data for Ingredient Measurement list
@@ -159,9 +201,7 @@ class UI {
                               <img src="${mealUI.strMealThumb}" class="img-fluid mt-4 rounded-pill" alt="Responsive image" width="200px">
 
                               <button type="button" class="btn btn-outline-light m-4 rounded-pill" id="saveBtn"> 
-                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
+                               ${saveIcon}
                               </button>
 
                               <h1 class="text-white mb-3"> ${mealUI.strMeal}</h1> 
@@ -205,9 +245,7 @@ class UI {
   }
   //Remove meal from UI and DOM but not from the local storage.
   static removemeal(el) {
-    if (el.classList.contains("removeRecipes")) {
-      el.parentElement.remove();
-    }
+    el.parentElement.remove();
   }
 }
 /*
@@ -225,24 +263,29 @@ searchField.addEventListener("input", () => {
     displayAutoComplete.classList.add("hidden");
   } else {
     // User inputs and UI functions
-    UI.getRecipe(searchField.value);
+    UI.getRecipe(searchField.value, "fromAutoSearch");
     displayAutoComplete.classList.remove("hidden");
   }
 });
 
+//Toggle saved recipe list
 document.querySelector(".showSavedRecipes").addEventListener("click", (e) => {
   saveFavoritesDiv.classList.toggle("show");
 });
 
-saveRecipes.addEventListener("click", (e) => {
-  UI.removemeal(e.target);
-  StoreData.removeData(e.target);
-});
-
+//Display Recipe when user select from saved recipe list
 saveRecipes.addEventListener("click", (e) => {
   if (e.target.classList.contains("savedRecipe")) {
-    UI.getRecipe(e.target.firstChild.data);
-    displayAutoComplete.classList.remove("hidden");
-    saveFavoritesDiv.classList.remove("show");
+    searchField.value = e.target.firstChild.data;
+    displayAutoComplete.classList.add("hidden");
+    UI.getRecipe(searchField.value, "fromSavedRecipe");
+  }
+});
+
+//Remove meal from UI and DOM but not from the local storage.
+saveRecipes.addEventListener("click", (e) => {
+  if (e.target.classList.contains("removeRecipes")) {
+    UI.removemeal(e.target);
+    StoreData.removeData(e.target.previousElementSibling);
   }
 });
