@@ -243,5 +243,6 @@ saveRecipes.addEventListener("click", (e) => {
   if (e.target.classList.contains("savedRecipe")) {
     UI.getRecipe(e.target.firstChild.data);
     displayAutoComplete.classList.remove("hidden");
+    saveFavoritesDiv.classList.remove("show");
   }
 });
