@@ -1,5 +1,4 @@
 // Global Variables for DOM manipulation
-const btn = document.getElementById("submitBtn");
 const searchField = document.getElementById("searchField");
 const displayAutoComplete = document.getElementById("displaySuggestions");
 const displayResult = document.getElementById("displayResult");
@@ -42,6 +41,8 @@ class StoreData {
   static addData(meal) {
     const saveFavoritesBtn = document.getElementById("saveBtn");
     saveFavoritesBtn.addEventListener("click", (e) => {
+      saveFavoritesDiv.classList.add("show");
+
       saveFavoritesBtn.innerHTML = ` <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
       </svg> 
@@ -71,7 +72,7 @@ class StoreData {
     StoreData.getData().forEach((e) => {
       saveRecipes.innerHTML += `
                               <div class="recipeContainer">
-                                <button id="${e.id}" class="savedRecipe rounded-pill">${e.meal}</button>
+                                <button id="${e.id}" class="savedRecipe">${e.meal}</button>
                                 <div class="removeRecipes">X</div>
                               </div>`;
     });
@@ -135,7 +136,6 @@ class UI {
     document.querySelectorAll("button").forEach((btnElement) => {
       btnElement.addEventListener("click", (el) => {
         mealList.forEach((meal) => {
-          // meal.idMeal === el.target.nextElementSibling.id ? UI.dipslayRecipe(meal) : null;
           meal.idMeal === el.target.id ? UI.dipslayRecipe(meal) : null;
           displayAutoComplete.classList.add("hidden");
         });
@@ -278,6 +278,8 @@ saveRecipes.addEventListener("click", (e) => {
   if (e.target.classList.contains("savedRecipe")) {
     searchField.value = e.target.firstChild.data;
     displayAutoComplete.classList.add("hidden");
+    saveFavoritesDiv.classList.remove("show");
+
     UI.getRecipe(searchField.value, "fromSavedRecipe");
   }
 });
@@ -288,4 +290,12 @@ saveRecipes.addEventListener("click", (e) => {
     UI.removemeal(e.target);
     StoreData.removeData(e.target.previousElementSibling);
   }
+});
+
+//hide save recipes on window scroll
+saveFavoritesDiv.addEventListener("mouseleave", (e) => {
+  console.log(e);
+  window.addEventListener("scroll", (e) => {
+    saveFavoritesDiv.classList.remove("show");
+  });
 });

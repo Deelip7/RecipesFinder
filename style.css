@@ -55,7 +55,7 @@ link {
   flex-direction: column;
   margin: 10px auto;
   height: 500px;
-  min-width: 350px;
+  min-width: 365px;
   z-index: 2;
   transition: height 0.5s ease-in-out;
   border: 1px solid rgb(255, 255, 255);
@@ -73,51 +73,57 @@ link {
 .recipeContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  padding: 0 10px;
+  margin: 10px;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 50px;
 }
 .savedRecipe {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 20px;
-  margin: 10px 10px;
-  border: 1px solid rgb(255, 255, 255);
+  border: 0;
+  font-size: 1rem;
+  margin: 10px 0px;
+  background: none;
+  color: #fff;
+  width: 300px;
   cursor: pointer;
-  max-width: 300px;
 }
 
-.savedRecipe:hover {
-  background-color: #fff;
-  color: rgb(0, 0, 0) !important;
+.savedRecipe:hover,
+.savedrecipe:focus {
+  color: rgb(226, 226, 226) !important;
 }
 .removeRecipes {
   color: rgb(228, 128, 128) !important;
-
   cursor: pointer;
   align-self: center;
-  /* padding-left: 10px; */
+  height: auto;
+  padding-left: 10px;
   height: 100%;
-  /* border-left: 1px solid rgb(255, 255, 255); */
+  border-left: 1px solid rgb(255, 255, 255);
 }
 
 .showSavedRecipes {
   display: block;
   position: fixed;
-  padding: 1px 15px;
+  background-color: #fff;
+  font-size: 0.8rem;
+  color: #000000;
   margin: 30px;
+  padding: 0.65rem 1.1rem;
   right: 0;
   bottom: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.326), 0 1px 2px rgba(0, 0, 0, 0.24);
-  color: #000000;
-  font-size: 25px;
-  border: 1px solid rgb(255, 255, 255);
-  background-color: #fff;
-  text-align: center;
-  border-radius: 50px;
   z-index: 20;
+  cursor: pointer;
+  user-select: none; /* Standard */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
-  cursor: pointer;
+  border-radius: 50px;
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.326), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.showSavedRecipes:hover,
+.showSavedRecipes:focus {
+  color: #ff0000;
 }
