@@ -65,7 +65,7 @@ class StoreData {
   static saveFavoritesRecipe() {
     saveRecipes.innerHTML = "";
     StoreData.getData().forEach((e) => {
-      saveRecipes.innerHTML += `<div class="saveSpan rounded-pill">${e.meal}<div id="${e.id}" class="removeRecipes">X</div></div>`;
+      saveRecipes.innerHTML += `<div class="savedRecipe rounded-pill">${e.meal}<div id="${e.id}" class="removeRecipes">X</div></div>`;
     });
   }
 
@@ -217,6 +217,8 @@ class UI {
 /   Pass Input Field value to UI class
 /
 */
+document.addEventListener("DOMContectLoaded", StoreData.saveFavoritesRecipe());
+
 searchField.addEventListener("input", () => {
   if (searchField.value.length === 0) {
     //IF searchField is empty = hid it
@@ -232,9 +234,14 @@ document.querySelector(".showSavedRecipes").addEventListener("click", (e) => {
   saveFavoritesDiv.classList.toggle("show");
 });
 
-document.addEventListener("DOMContectLoaded", StoreData.saveFavoritesRecipe());
-
 saveRecipes.addEventListener("click", (e) => {
   UI.removemeal(e.target);
   StoreData.removeData(e.target);
+});
+
+saveRecipes.addEventListener("click", (e) => {
+  if (e.target.classList.contains("savedRecipe")) {
+    UI.getRecipe(e.target.firstChild.data);
+    displayAutoComplete.classList.remove("hidden");
+  }
 });

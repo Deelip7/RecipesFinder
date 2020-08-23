@@ -70,7 +70,7 @@ link {
   bottom: 8% !important;
 }
 
-.saveSpan {
+.savedRecipe {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -78,9 +78,14 @@ link {
   margin: 10px auto;
   border-radius: 2%;
   border: 1px solid rgb(255, 255, 255);
+  cursor: pointer;
   max-width: 300px;
 }
 
+.savedRecipe:hover {
+  background-color: #fff;
+  color: rgb(0, 0, 0) !important;
+}
 .removeRecipes {
   color: rgb(228, 128, 128) !important;
   cursor: pointer;
