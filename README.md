@@ -13,7 +13,7 @@ The app uses the themealdb REST API.
 - CSS
 
 
-### Authors 
+### Author
 
    Theelipan Prabakar - https://www.theelipan.com/
    
