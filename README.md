@@ -3,7 +3,7 @@
 The purpose of this website is to help users find recipes from a variety of sources. Users can save recipes to view them later.
 The app uses the themealdb REST API.
 
-<img src="https://www.theelipan.com/images/recipeApp-mockup.svg" alt="screenshot of the website" width="600"/>
+<img src="https://user-images.githubusercontent.com/38120176/103391593-44149600-4ae8-11eb-9e83-a2abad8d2a3f.png" alt="screenshot of the website" width="800"/>
 
 ## Tools
 - Javascript
