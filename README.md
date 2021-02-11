@@ -3,7 +3,7 @@
 The purpose of this website is to help users find recipes from a variety of sources. Users can save recipes to view them later.
 The app uses the themealdb REST API.
 
-<img src="./recipeFinder.png" alt="screenshot of the website" width="800"/>
+<img src="https://raw.githubusercontent.com/Deelip7/RecipesFinder/master/Images/recipeFinder.png" alt="screenshot of the website" width="800"/>
 
 ## Tools
 
